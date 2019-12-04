@@ -31,10 +31,16 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="computerTrun.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="interfacingWithFiles.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="main.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="pdIO.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="structs.c">

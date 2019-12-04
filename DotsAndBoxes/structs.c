@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "structs.h" //to be added
+
 struct player{
 
     char name[22]; //name can be at most 20 characters + 1 NULL + 1 \n check if pdcurses input puts them automatically
