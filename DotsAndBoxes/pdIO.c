@@ -10,7 +10,7 @@ struct dot * getPlayerMove(struct player currentPlayer){
     struct dot chosenDots[2]; //proposed idea: to make an id for each dot (calculated from its index in dot matrix) and pass these only from and to functions
 
 
-};
+}
 
 int getMenuChoice(){
 
