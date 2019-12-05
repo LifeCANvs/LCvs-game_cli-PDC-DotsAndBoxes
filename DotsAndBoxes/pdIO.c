@@ -4,7 +4,7 @@
 #include <math.h> //do I need this for abs??
 #include <ctype.h>
 #include <string.h>
-//global (extern) arrays are dots and lines
+//global (extern) arrays of dots and lines??
 struct dot * getPlayerMove(struct player currentPlayer){
 
     struct dot chosenDots[2]; //proposed idea: to make an id for each dot (calculated from its index in dot matrix) and pass these only from and to functions
@@ -16,13 +16,13 @@ int getMenuChoice(){
 
     /*print menu and get choice*/
 
-};
+}
 
 void connectDots(/*int chosenDotsID*/){
 
     //connect chosen dots and unpdate line color
 
-};
+}
 
 //extra functions for screen drawing, refreshing, CTRL+S (in-game menu)
 
@@ -36,11 +36,11 @@ void getPlayerName(struct player * currentPlayerPointer){ //called when a player
     } //what about \n?
     strcpy(currentPlayer.name, name);
 
-};
+}
 
 void displayData(struct player * players, int n ) //n is number of players to display 1, 10
 {
   for(int i = 0; i<n;i++){
     /*do something*/
   }
-};
+}
