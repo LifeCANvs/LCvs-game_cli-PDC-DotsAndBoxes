@@ -17,9 +17,8 @@ void file(struct player player1)
         printf("ERROR in opening the file \n");
         exit(1);
     }
-    //why stop when fscanf   ???
     fwrite(&player1,sizeof(struct player), 1,F1);  //numbersData???
-    if(fprintf != 0)
+    if(fwrite!= 0)
         printf("contents to file written successfully !\n");
     else
         printf("error writing file !\n");
