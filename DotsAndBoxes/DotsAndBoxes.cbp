@@ -34,6 +34,11 @@
 		<Unit filename="computerTrun.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="globals.h" />
+		<Unit filename="grid.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="grid.h" />
 		<Unit filename="interfacingWithFiles.c">
 			<Option compilerVar="CC" />
 		</Unit>
