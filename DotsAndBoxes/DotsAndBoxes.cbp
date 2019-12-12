@@ -31,7 +31,7 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
-		<Unit filename="computerTrun.c">
+		<Unit filename="computerTurn.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="globals.h" />
@@ -48,9 +48,8 @@
 		<Unit filename="pdIO.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="structs.c">
-			<Option compilerVar="CC" />
-		</Unit>
+		<Unit filename="pdIO.h" />
+		<Unit filename="structs.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />

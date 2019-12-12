@@ -1,13 +1,23 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <curses.h>
-#include <math.h> //do I need this for abs??
-#include <ctype.h>
-#include <string.h>
-#include "pdIO.h> //to be made
+#include "globals.h"
 //global (extern) arrays of dots and lines
 
-struct dot * getPlayerMove( int arr[][4] ){
+
+
+void initialiseUI(){
+
+    int nCols = COLS / 2;
+    int nLines = 3*LINES / 2;
+    initscr();
+    cbreak();
+    noecho();
+    refresh();
+
+    curs_set(2);
+
+    mainWindow = newwin(nLines, nCols, 0,0);
+}
+
+struct dot * getPlayerMove(/*grid is a global variable*/){
 
     struct dot chosenDots[2]; //proposed idea: to make an id for each dot (calculated from its index in dot matrix) and pass these only from and to functions
     //input first dot
@@ -16,15 +26,21 @@ struct dot * getPlayerMove( int arr[][4] ){
 
 };
 
-int getMenuChoice(){
+/*void getMenuChoice(char * whichMenu){ /*print menu and get choice
 
-    /*print menu and get choice*/
+    if(!strcmp(whichMenu,"main")){
+        struct item mainM [4] = {
+            {"start game", subMenu1};
+            {"load game", subMenu2};
+            {"top 10 players", printTop10()};
+        };
+    }
 
-};
+};*/
 
-void connectDots(/*int chosenDotsID*/){
+void connectUI(struct dot chosenDots[2]){
 
-    //connect chosen dots and unpdate line color
+
 
 };
 
@@ -48,3 +64,42 @@ void displayData(struct player * players, int n ) //n is number of players to di
     /*do something*/
   }
 };
+
+int doMenu(int y, int x, WINDOW * currentMenu, int n, char * items[n]){
+
+    int maxLength = 0, i, key = '\n', choice = 0, prevChoice = -1;
+
+    for(i = 0; i < n; i++)
+        if(strlen(items[i]) > maxLength)
+            maxLength = strlen(items[i]); //find out the width of the items
+
+    currentMenu = newwin(n+2, maxLength+4, y,x);
+    box(currentMenu, 0, 0);
+    keypad(currentMenu, TRUE);
+    for(i = 0; i < n; i++){
+        mvwprintw(currentMenu,1+i,1,"%s", items[i]);
+    }
+    wrefresh(currentMenu);
+
+    do{
+        if(prevCoice != choice){
+            prevCoice == choice;
+            wattron(currentMenu, A_REVERSE);
+            mvwprintw(currentMenu, 1+choice, 1, "%s", items[choice]);
+            wrefresh(currentMenu);
+        }
+        key = wgetch(currentMenu);
+        switch (key){
+        case KEY_UP:
+            choice = choice == 0? n-1: choice-1; break;
+        case KEY_DOWN:
+            choice = choice == n-1? 0: choice+1; break;
+        }
+
+    }while(key != '\n');
+    free(currentMenu);
+
+    return choice;
+}
+
+
