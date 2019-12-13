@@ -3,7 +3,8 @@
 
 
 
-void initialiseGrid(){
+void initialiseGrid()
+{
 
     // i = c + r * mode, but as a special case because 0<c<mode c = i%mode
     int size = mode*mode, i= 0, row, column;          //grid has the shape (described in docs
@@ -66,6 +67,9 @@ bool connectGrid(struct dot start, struct dot end)  //all dots passed to this fu
     int startIndex = start.column + mode * start.row, endIndex = end.column + end.row * mode;
     int difference = startIndex - endIndex;
     enum direction dArrival;
+
+    diagonal[0] = start;
+
     if(difference == -3)
     {
         grid[startIndex][DOWN] = endIndex;
@@ -90,7 +94,6 @@ bool connectGrid(struct dot start, struct dot end)  //all dots passed to this fu
         grid[endIndex][RIGHT] = startIndex;
         dArrival = LEFT;
     }
-    linesLeft--;
     return boxClosed(endIndex, dArrival);
 }
 
@@ -100,6 +103,11 @@ bool boxClosed(int startIndex, enum direction d)
     int i = d, linesJoined = 1, nextIndex = startIndex;
     while(linesJoined < 4)  //check clockwise
     {
+        if(linesJoined == 2)
+        {
+            diagonal[1].row = nextIndex/mode;
+            diagonal[1].column = nextIndex%mode;
+        }
         i++;
         if(i > 3)
             i = 0;
@@ -116,6 +124,11 @@ bool boxClosed(int startIndex, enum direction d)
         i = d, linesJoined = 1, nextIndex = startIndex;
         while(linesJoined < 4)
         {
+            if(linesJoined == 2)
+            {
+                diagonal[1].row = nextIndex/mode;
+                diagonal[1].column = nextIndex%mode;
+            }
             i--;
             if(i < 0)
                 i = 3;

@@ -64,6 +64,10 @@ int main()
     default: break;
     }
 
+    delwin(gridWindow);
+    delwin(dataWindow);
+    delwin(messageWindow);
+    delwin(helpWindow);
     getch();
     endwin();
     return 0;
@@ -75,10 +79,9 @@ void playGame()
     bool incrementScore;
     int currentPlayer;
 
-    inGameData.lines = 0;
     inGameData.player1turn = true;
     inGameData.timeElapsed = 0;
-    linesLeft = 2*(mode - 1)*(mode);
+    inGameData.linesLeft = 2*(mode - 1)*(mode);
     startTime = time(NULL);
 
     initialiseGrid();
@@ -93,9 +96,10 @@ void playGame()
     chosenDots = (struct dot *)calloc(sizeof(struct dot),2);
     if(chosenDots != NULL)
     {
-        while(linesLeft > 0) //UNDO is done within getPlayerMove
+        while(inGameData.linesLeft > 0) //UNDO is done within getPlayerMove
         {
             currentPlayer = inGameData.player1turn?0:1;
+            updateDataWindow();
             if(computer)
             {
                 chosenDots = getComputerMove();
@@ -103,12 +107,16 @@ void playGame()
             else
             {
                 getPlayerMove(chosenDots);
-            } //assigning a static array pointer to dynamic?
+            }
+            inGameData.linesLeft = inGameData.linesLeft-1;
+            mvwprintw(messageWindow, 3, 2, "lines left = %d", inGameData.linesLeft);
+            wrefresh(messageWindow);
             inGameData.players[currentPlayer].moves++;
-            incrementScore = connectGrid(*chosenDots, *(chosenDots+1)); //calls connectUI()
-            if(incrementScore)
+            incrementScore = connectGrid(*chosenDots, *(chosenDots+1));
+            if(incrementScore) // a box is closed
             {
                 inGameData.players[currentPlayer].score++;
+                repaintBox();
             }
             else
             {
@@ -121,7 +129,8 @@ void playGame()
         }
         else if(inGameData.players[0].score == inGameData.players[1].score)
         {
-            //printDraw();
+            mvwprintw(messageWindow, 2,2, "It's a draw!");
+            wrefresh(messageWindow);
         }
         else
             getPlayerName(&inGameData.players[1]);

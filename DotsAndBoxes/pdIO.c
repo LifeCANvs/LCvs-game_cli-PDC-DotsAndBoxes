@@ -115,7 +115,7 @@ void getPlayerMove(struct dot chosenDots[2])
                         x = x==1? maxx:x-interdistx;
                         validKey = true;
                         break;
-                    case 'Z': //redo
+                    case 'z': //redo
                         validKey = true;
                         if(spareDot.row != -1)
                         {
@@ -125,13 +125,14 @@ void getPlayerMove(struct dot chosenDots[2])
                             done = true;
                         }
                         break;
-                    case 'S':
+                    case 's':
                         validKey = true;
                         done = true;
                         mvwprintw(messageWindow,1,1,"Saving Game..");
                         wrefresh(messageWindow);
                         mvwprintw(messageWindow,1,1,"Game saved as Game %d",saveGame()); //save game should return which file
                         wrefresh(messageWindow);
+                        return;
                         break;
                     case '\n':
                         validKey = true;
@@ -266,11 +267,17 @@ void getPlayerMove(struct dot chosenDots[2])
             while(!done);
             currentDot.row = y/interdisty;
             currentDot.column = x/interdistx;
-            if(x != startX && y !=startY && !lineColor(startY,startX,y,x))
+            if((!(x == startX && y ==startY)) && !lineColor(startY,startX,y,x))
             {
-                    chosenDots[1] = currentDot;
-                    mvwaddch(gridWindow,y,x,'O');
-                    i++;
+                chosenDots[1] = currentDot;
+                mvwaddch(gridWindow,y,x,'O');
+
+                wattron(gridWindow, inGameData.player1turn?COLOR_PAIR(3):COLOR_PAIR(4));
+                drawLine(startY, startX, y, x);
+                wattroff(gridWindow, inGameData.player1turn?COLOR_PAIR(3):COLOR_PAIR(4));
+                wrefresh(gridWindow);
+
+                i++;
             }
             else
             {
@@ -278,6 +285,7 @@ void getPlayerMove(struct dot chosenDots[2])
 
             }
             wrefresh(messageWindow);
+
         }
 
 
@@ -289,7 +297,26 @@ void getPlayerMove(struct dot chosenDots[2])
 
 void drawLine(int startY, int startX, int endY, int endX)
 {
-
+    if(startX > endX)
+    {
+        startX ^= endX;
+        endX ^= startX;
+        startX ^= endX;
+    }
+    if(startY > endY)
+    {
+        startY ^= endY;
+        endY ^= startY;
+        startY ^= endY;
+    }
+    if(startX == endX) //vertical line
+    {
+        mvwvline(gridWindow,startY+1,startX,' ', interdisty-1);
+    }
+    else //horizontal line
+    {
+        mvwhline(gridWindow,startY,startX+1,' ', interdistx-1);
+    }
 
 
 }
@@ -368,45 +395,35 @@ int doMenu(int y, int x, WINDOW * currentMenu, int n, char * items[n])
     return choice;
 }
 
-void updateDataWindow(int which)
+void updateDataWindow()
 {
 
-    if (which == -1 || which == 0)
+
+    wattron(dataWindow,inGameData.player1turn?COLOR_PAIR(1):COLOR_PAIR(2)); /*turn*/
+    mvwprintw(dataWindow, 2, 2,"Player %d's turn",inGameData.player1turn?1:2);
+    wattroff(dataWindow,inGameData.player1turn?COLOR_PAIR(1):COLOR_PAIR(2));
+    //doupdate();
+    /*remaining lines*/
+    mvwprintw(dataWindow, 4,2,"remaining lines = %d",inGameData.linesLeft);
+    //doupdate();
+
+    /*moves and score*/
+    mvwprintw(dataWindow, 7, 2, "moves");
+    mvwprintw(dataWindow, 8, 2, "score");
+    for(int i = 1; i <= 2; i++)
     {
-        wattron(dataWindow,inGameData.player1turn?COLOR_PAIR(1):COLOR_PAIR(2));
-        mvwprintw(dataWindow, 2, 2,"Player %d's turn",inGameData.player1turn?1:2);
-        wattroff(dataWindow,inGameData.player1turn?COLOR_PAIR(1):COLOR_PAIR(2));
-        doupdate();
+        wattron(dataWindow, COLOR_PAIR(i));
+        mvwprintw(dataWindow, 6, 10*(i),"Player %d", i);
+        mvwprintw(dataWindow, 7, 10*(i), "%d",inGameData.players[i-1].moves);
+        mvwprintw(dataWindow, 8, 10*(i),"%d",inGameData.players[i-1].score);
+        wattroff(dataWindow, COLOR_PAIR(i));
     }
-    if(which == -1 || which == 1)
-    {
-        mvwprintw(dataWindow, 4,2,"remaining lines = %d",linesLeft);
-        doupdate();
-    }
-    if(which == -1 || which == 2)
-    {
-        /*const char * table = "\t\tPlayer 1\t\tPlayer2\n\
-        moves\t%d\t\t%d\n\
-        score\t%d\t\t%d";
-        mvwprintw(dataWindow,4,43,table,inGameData.players[0].moves,inGameData.players[1].moves,inGameData.players[0].score,inGameData.players[1].score);*/
-        mvwprintw(dataWindow, 7, 2, "moves");
-        mvwprintw(dataWindow, 8, 2, "score");
-        for(int i = 1; i <= 2; i++)
-        {
-            wattron(dataWindow, COLOR_PAIR(i));
-            mvwprintw(dataWindow, 6, 10*(i),"Player %d", i);
-            mvwprintw(dataWindow, 7, 10*(i), "%d",inGameData.players[i-1].moves);
-            mvwprintw(dataWindow, 8, 10*(i),"%d",inGameData.players[i-1].score);
-            wattroff(dataWindow, COLOR_PAIR(i));
-        }
-        doupdate();
-    }
-    if(which == -1 || which == 3)
-    {
-        inGameData.timeElapsed += round(difftime(time(NULL),startTime));
-        mvwprintw(dataWindow,10,2,"time: %d:%d", inGameData.timeElapsed/60, inGameData.timeElapsed %60);
-        doupdate();
-    }
+    //doupdate();
+    /*time*/
+    inGameData.timeElapsed += round(difftime(time(NULL),startTime));
+    mvwprintw(dataWindow,10,2,"time: %d:%d", inGameData.timeElapsed/60, inGameData.timeElapsed %60);
+    doupdate();
+
     wrefresh(dataWindow);
 
 
@@ -428,3 +445,20 @@ int lineColor(int startY, int startX, int endY, int endX)
 
 }
 
+void repaintBox()
+{
+
+    int x1 = 1 + diagonal[0].column * interdistx;
+    int x2 = 1 + diagonal[1].column * interdistx;
+    int y1 = 1 + diagonal[0].row * interdisty;
+    int y2 = 1 + diagonal[1].row * interdisty;
+
+    wattron(gridWindow, inGameData.player1turn?COLOR_PAIR(3):COLOR_PAIR(4));
+    drawLine(y1, x1, y1, x2);
+    drawLine(y1, x1, y2, x1);
+    drawLine(y2, x2, y1, x2);
+    drawLine(y2, x2, y2, x1);
+    wattroff(gridWindow, inGameData.player1turn?COLOR_PAIR(3):COLOR_PAIR(4));
+    wrefresh(gridWindow);
+
+}

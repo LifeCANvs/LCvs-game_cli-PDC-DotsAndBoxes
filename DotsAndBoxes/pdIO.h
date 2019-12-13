@@ -7,8 +7,9 @@ void drawLine(int, int, int,int);
 void getPlayerName(struct player * currentPlayerPointer);
 void displayData(struct player * players, int n );
 int doMenu(int y, int x, WINDOW * currentMenu,int n, char * items[n]);
-void updateDataWindow(int);
+void updateDataWindow();
 int lineColor(int, int, int, int);
+void repaintBox();
 
 
 WINDOW * helpWindow; /*in game windows*/

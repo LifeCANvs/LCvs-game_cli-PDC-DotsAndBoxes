@@ -20,7 +20,7 @@ struct{
 
     //grid
     struct player players[2];
-    int lines; //lines already connected
+    int linesLeft; //lines already connected
     time_t timeElapsed;
     bool player1turn;
 
