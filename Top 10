@@ -1,0 +1,79 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include<assert.h>
+struct player
+{
+    char name[22];
+    int score;
+} player1;
+
+void top(struct player);
+
+int main()
+{
+    top(player1);
+    return 0;
+}
+void top(struct player player1)
+{
+    FILE *F1;
+    F1=fopen("D:\\CSED 23\\Programming\\Project Game\\Data7.txt","r"); //paths //read and writing
+    if(F1==NULL)
+    {
+        printf("file not present\n");
+        exit(1);
+    }
+    else
+    {
+        printf("file opened in read mode\n");
+    }
+    char line[100];
+    char ch;
+    int k=0,i=0;
+    char *token;
+    char *arr[100][2];
+    int count=0;
+
+    if(F1!=NULL)
+    {
+        while(!feof(F1))
+        {
+            char* currentLine = fgets(line,100,F1);
+                arr[i][0] = strdup(strtok(line,","));
+                arr[i][1] = strdup(strtok(NULL,","));
+                    count+=1;
+                    i+=1;
+        }
+    }
+    fclose(F1);
+    int a[100];
+    for(i=0;i<count;i++){
+    a[i]=atoi(arr[i][1]);
+    }
+    int temp1;
+    char temp2[100];
+
+    int j;
+    for(i=0;i<count;i++){
+        for(j=i+1;j<count;j++){
+        if(a[i]<a[j]){
+            temp1=a[i];
+            a[i]=a[j];
+            a[j]=temp1;
+
+            strcpy(temp2,arr[i][0]);
+            strcpy(arr[i][0],arr[j][0]);
+            strcpy(arr[j][0],temp2);
+        }
+        }
+    }
+    printf("        TOP 10     \n");
+    for(i=0; i<count; i++)
+    {
+        printf("%s\n",arr[i][0]);
+        printf("%d\n",a[i]);
+
+    }
+
+}
