@@ -1,5 +1,5 @@
 #include "globals.h"
-//some functions in main can be called by any other module
+
 extern int mode;
 bool computer;
 
@@ -21,6 +21,7 @@ int main()
     wprintw(stdscr,"\t\t*** \t ** \t***\t***\n\
              \t*  *\t*  *\t * \t *\n\
              \t*** \t ** \t * \t***\n");
+    refresh();
 
     choice = doMenu(y,x, mainMenuWin,4, mainMenuItems);  //main menu
 
@@ -31,19 +32,19 @@ int main()
         choice = doMenu(y+2,x+10,mainMenuWin,4,subMenu1);
         switch(choice)
         {
-        case 1:
+        case 0:
             mode = 3, computer = false;
             playGame();
             break;
-        case 2:
+        case 1:
             mode = 3, computer = true;
             playGame();
             break;
-        case 3:
+        case 2:
             mode = 5, computer = false;
             playGame();
             break;
-        case 5:
+        case 3:
             mode = 5, computer = true;
             playGame();
             break;
@@ -72,13 +73,21 @@ void playGame()
 {
     struct dot *chosenDots;
     bool incrementScore;
-    struct inGameData currentGame = {.lines = linesLeft, .player1turn = true, .timeElapsed = 0};
     int currentPlayer;
+
+    inGameData.lines = 0;
+    inGameData.player1turn = true;
+    inGameData.timeElapsed = 0;
+    linesLeft = 2*(mode - 1)*(mode);
+    startTime = time(NULL);
+
+    initialiseGrid();
+    initialiseUI();
 
     for(int i = 0; i < 2; i++)
     {
-        currentGame.players[i].score = 0;
-        currentGame.players[i].moves = 0;
+        inGameData.players[i].score = 0;
+        inGameData.players[i].moves = 0;
     }
 
     chosenDots = (struct dot *)calloc(sizeof(struct dot),2);
@@ -86,36 +95,36 @@ void playGame()
     {
         while(linesLeft > 0) //UNDO is done within getPlayerMove
         {
-            currentPlayer = currentGame.player1turn?0:1;
+            currentPlayer = inGameData.player1turn?0:1;
             if(computer)
             {
                 chosenDots = getComputerMove();
             }
             else
             {
-                chosenDots = getPlayerMove();
+                getPlayerMove(chosenDots);
             } //assigning a static array pointer to dynamic?
-            currentGame.players[currentPlayer].moves++;
+            inGameData.players[currentPlayer].moves++;
             incrementScore = connectGrid(*chosenDots, *(chosenDots+1)); //calls connectUI()
             if(incrementScore)
             {
-                currentGame.players[currentPlayer].score++;
+                inGameData.players[currentPlayer].score++;
             }
             else
             {
-                currentGame.player1turn = !currentGame.player1turn;
+                inGameData.player1turn = !inGameData.player1turn;
             }
         }
-        if(currentGame.players[0].score > currentGame.players[1].score)
+        if(inGameData.players[0].score > inGameData.players[1].score)
         {
-            getPlayerName(&currentGame.players[0]); //prints who is winner and prompt name
+            getPlayerName(&inGameData.players[0]); //prints who is winner and prompt name
         }
-        else if(currentGame.players[0].score == currentGame.players[1].score)
+        else if(inGameData.players[0].score == inGameData.players[1].score)
         {
             //printDraw();
         }
         else
-            getPlayerName(&currentGame.players[1]);
+            getPlayerName(&inGameData.players[1]);
         //write new data to file
     }
     else

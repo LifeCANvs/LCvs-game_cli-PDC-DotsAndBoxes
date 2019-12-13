@@ -3,35 +3,35 @@
 	<stdio.h>
 	<stdlib.h>
 
-1576153490 source:d:\uni\term3\programming\dotsandboxes\grid.c
+1576235965 source:d:\uni\term3\programming\dotsandboxes\grid.c
 	"globals.h"
 
-1575695074 d:\uni\term3\programming\dotsandboxes\grid.h
+1576232217 d:\uni\term3\programming\dotsandboxes\grid.h
 
-1576153538 d:\uni\term3\programming\dotsandboxes\structs.h
+1576188428 d:\uni\term3\programming\dotsandboxes\structs.h
 	<stdbool.h>
 
-1576153186 d:\uni\term3\programming\dotsandboxes\globals.h
+1576236336 d:\uni\term3\programming\dotsandboxes\globals.h
 	<stdio.h>
 	<stdlib.h>
 	<time.h>
 	<curses.h>
 	<stdbool.h>
-	<ctype.h>
 	<string.h>
+	<math.h>
 	"structs.h"
-	"pdIO.h"
 	"grid.h"
+	"pdIO.h"
 
-1576153452 d:\uni\term3\programming\dotsandboxes\pdio.h
+1576235965 d:\uni\term3\programming\dotsandboxes\pdio.h
 
 1576147120 source:d:\uni\term3\programming\dotsandboxes\interfacingwithfiles.c
 	<stdio.h>
 	<stdlib.h>
 
-1576148308 source:d:\uni\term3\programming\dotsandboxes\main.c
+1576231733 source:d:\uni\term3\programming\dotsandboxes\main.c
 	"globals.h"
 
-1576147435 source:d:\uni\term3\programming\dotsandboxes\pdio.c
+1576238849 source:d:\uni\term3\programming\dotsandboxes\pdio.c
 	"globals.h"
 

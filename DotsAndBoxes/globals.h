@@ -5,15 +5,19 @@
 #include <time.h>
 #include <curses.h>
 #include <stdbool.h>
-#include <ctype.h>
 #include <string.h>
-#include "structs.h"
-#include "pdIO.h"
-#include "grid.h"
-
-
-
+#include <math.h>
 enum direction {UP, RIGHT, DOWN, LEFT};
 int mode, linesLeft; //linesLeft = (mode-1)*(mode-1)
+time_t startTime;
+
+#include "structs.h"
+#include "grid.h"
+#include "pdIO.h"
+
+
+
+
+
 
 #endif // GLOBALS_H_INCLUDED

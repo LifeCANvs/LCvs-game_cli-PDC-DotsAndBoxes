@@ -16,15 +16,15 @@ struct dot{ //holder for coordinates
     //int emptySlot; //initialised to 4 or 2 or 3
 };
 
-struct inGameData{
+struct{
 
     //grid
     struct player players[2];
-    int lines;
+    int lines; //lines already connected
     time_t timeElapsed;
     bool player1turn;
 
-};
+}inGameData;
 
 /*struct{
 

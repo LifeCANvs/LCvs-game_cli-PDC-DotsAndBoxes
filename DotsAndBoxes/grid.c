@@ -2,13 +2,6 @@
 
 
 
-int grid[3*3][4]; //MODE should be defined globally and dynamically allocated
-bool connectGrid(struct dot, struct dot); //calls boxClosed
-void initialiseGrid();
-bool boxClosed(int, enum direction d);
-bool isAvailable(struct dot);
-
-
 
 void initialiseGrid(){
 
