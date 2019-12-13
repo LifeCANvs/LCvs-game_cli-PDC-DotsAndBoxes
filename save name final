@@ -1,0 +1,33 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct player
+    {
+        char name[22];
+        int score;
+    };
+// struct player player1={"rana",80};  
+void file(struct player player1)
+{
+    FILE *F1;
+    F1=fopen("D:\\CSED 23\\Programming\\Project Game\\Data7.txt","a"); //paths ??
+    if(F1==NULL)
+    {
+        printf("ERROR in opening the file \n");
+        exit(1);
+    }
+   fprintf(F1,"%s",player1.name);
+   fprintf(F1,",%d",player1.score);
+    fprintf(F1,"\n");
+    if(fprintf != 0)
+        printf("append successfully !\n");
+    else
+        printf("error in appending !\n");
+
+    fclose(F1);
+}
+
+int main(){
+file(player1);  //player_num???
+return 0;
+}
