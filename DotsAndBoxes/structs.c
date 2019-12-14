@@ -9,16 +9,14 @@ struct player{
     int color; //see pdcurses interface DOES it have to be int??
 };
 
-struct dot{
+struct dot{ //holder for coordinates
 
-    unsigned char up;//stores whether the dot is connected to another dot. if yes, stores the index of the line used
-    unsigned char down;
-    unsigned char left;
-    unsigned char right;
-    int position; //check pdcurses for precise format
+    int row;
+    int column;
+    //int emptySlot; //initialised to 4 or 2 or 3
 };
 
-struct line{
+struct line{ //might not need it
 
     struct dot start;
     struct dot end;
