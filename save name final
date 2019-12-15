@@ -5,8 +5,7 @@ struct player
     {
         char name[22];
         int score;
-    };
-// struct player player1={"rana",80};  
+    };  
 void file(struct player player1)
 {
     FILE *F1;
