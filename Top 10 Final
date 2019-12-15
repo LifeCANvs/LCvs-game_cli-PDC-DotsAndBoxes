@@ -29,9 +29,7 @@ void top(struct player player1)
         printf("file opened in read mode\n");
     }
     char line[100];
-    char ch;
-    int k=0,i=0;
-    char *token;
+    int i=0;
     char *arr[100][2];
     int count=0;
 
