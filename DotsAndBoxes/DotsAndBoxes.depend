@@ -1,7 +1,6 @@
 # depslib dependency file v1.0
-1576147047 source:d:\uni\term3\programming\dotsandboxes\computerturn.c
-	<stdio.h>
-	<stdlib.h>
+1576688982 source:d:\uni\term3\programming\dotsandboxes\computerturn.c
+	"globals.h"
 
 1576349535 source:d:\uni\term3\programming\dotsandboxes\grid.c
 	"globals.h"
@@ -10,7 +9,7 @@
 
 1576328412 d:\uni\term3\programming\dotsandboxes\structs.h
 
-1576349632 d:\uni\term3\programming\dotsandboxes\globals.h
+1576650954 d:\uni\term3\programming\dotsandboxes\globals.h
 	<stdio.h>
 	<stdlib.h>
 	<time.h>
@@ -22,16 +21,21 @@
 	"structs.h"
 	"grid.h"
 	"pdIO.h"
+	"interfacingWithFiles.h"
+	"computerTurn.h"
 
-1576349154 d:\uni\term3\programming\dotsandboxes\pdio.h
+1576653982 d:\uni\term3\programming\dotsandboxes\pdio.h
 
-1576147120 source:d:\uni\term3\programming\dotsandboxes\interfacingwithfiles.c
-	<stdio.h>
-	<stdlib.h>
-
-1576349154 source:d:\uni\term3\programming\dotsandboxes\main.c
+1576654212 source:d:\uni\term3\programming\dotsandboxes\interfacingwithfiles.c
 	"globals.h"
 
-1576349632 source:d:\uni\term3\programming\dotsandboxes\pdio.c
+1576689038 source:d:\uni\term3\programming\dotsandboxes\main.c
 	"globals.h"
+
+1576687556 source:d:\uni\term3\programming\dotsandboxes\pdio.c
+	"globals.h"
+
+1576494608 d:\uni\term3\programming\dotsandboxes\interfacingwithfiles.h
+
+1576677169 d:\uni\term3\programming\dotsandboxes\computerturn.h
 

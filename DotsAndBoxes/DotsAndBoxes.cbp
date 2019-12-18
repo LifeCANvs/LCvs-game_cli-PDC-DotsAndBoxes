@@ -34,6 +34,7 @@
 		<Unit filename="computerTurn.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="computerTurn.h" />
 		<Unit filename="globals.h" />
 		<Unit filename="grid.c">
 			<Option compilerVar="CC" />
@@ -42,6 +43,7 @@
 		<Unit filename="interfacingWithFiles.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="interfacingWithFiles.h" />
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>

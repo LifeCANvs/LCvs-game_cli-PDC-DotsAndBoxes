@@ -47,37 +47,45 @@ void initialiseUI(bool reload)
             wnoutrefresh(gridWindow);
         }
     }
+    maxx = j-interdistx;
+    maxy = i-interdisty;
 
     if(reload)//only when the game is loaded
     {
         max = mode*(mode-1);
         for(i = 0; i < max; i++)
         {
+            int row, column;
             int color = inGameData.vLines[i];
             if(color)
             {
-                startX = 1 + (i%mode)*interdistx;
-                startY = 1 + (i%mode)*interdisty;
+                row = i/mode, column = i%mode;
+                startX = 1 +column*interdistx;
+                startY = 1 + row*interdisty;
                 wattron(gridWindow, COLOR_PAIR(color));
                 drawLine(startY, startX, startY+interdisty, startX);
                 wattroff(gridWindow, COLOR_PAIR(color));
-                wnoutrefresh(gridWindow);
+                //wnoutrefresh(gridWindow);
+
+                wrefresh(gridWindow);
             }
             color = inGameData.hLines[i];
             if(color)
             {
-                startX = 1 + (i%mode)*interdistx;
-                startY = 1 + (i%mode)*interdisty;
+                row = i%mode, column = i/mode;
+                startX = 1 + column*interdistx;
+                startY = 1 + row*interdisty;
                 wattron(gridWindow, COLOR_PAIR(color));
                 drawLine(startY, startX, startY, startX+interdistx);
                 wattroff(gridWindow, COLOR_PAIR(color));
-                wnoutrefresh(gridWindow);
+                wrefresh(gridWindow);
+
+                //wnoutrefresh(gridWindow);
             }
         }
     }
 
-    maxx = j-interdistx;
-    maxy = i-interdisty;
+
     doupdate();
 
     /*message window*/
@@ -134,10 +142,15 @@ void getPlayerMove(struct dot chosenDots[2])
                 {
                     prevX = x;
                     prevY = y;
+                    halfdelay(200);
+                    halfdelay(200);
+                    halfdelay(200);
                     key = wgetch(gridWindow);
                     switch(key)
                     {
-
+                    case ERR:
+                        updateDataWindow();
+                        break;
                     case KEY_UP:
                         y = y==1? maxy:y-interdisty;
                         validKey = true;
@@ -164,17 +177,22 @@ void getPlayerMove(struct dot chosenDots[2])
                         }
                         break;
                     case 's':
+                    {
+                        char * saveSlots[3] = {"Game 1", "Game 2", "Game 3"};
                         validKey = true;
                         done = true;
+                        key = doMenu(2,2,messageWindow, 3, saveSlots);
                         mvwprintw(messageWindow,1,1,"Saving Game..");
                         wrefresh(messageWindow);
-                        //mvwprintw(messageWindow,1,1,"Game saved as Game %d",saveGame()); //save game should return which file
+                        saveGame(key+1);
                         mvwprintw(messageWindow, 2,1, "Press any key to continue");
                         wrefresh(messageWindow);
-                        //key = wgetch(messageWindow);
+
                         saved = true;
-                        return;
-                        break;
+                    }
+
+                    return;
+                    break;
                     case '\n':
                         validKey = true;
                         done = true;
@@ -193,10 +211,9 @@ void getPlayerMove(struct dot chosenDots[2])
             }
             while(!done);
 
-
             if(isAvailable((struct dot)
         {
-            y/interdisty, x/interdistx
+            y/interdisty,x/interdistx
         }))
             {
                 currentDot.row = y/interdisty;
@@ -228,7 +245,9 @@ void getPlayerMove(struct dot chosenDots[2])
                     key = wgetch(gridWindow);
                     switch(key)
                     {
-
+                    case ERR:
+                        updateDataWindow();
+                        break;
                     case KEY_UP:
                         if( y == startY && x == startX)  //going up from selected dot
                         {
@@ -326,9 +345,9 @@ void getPlayerMove(struct dot chosenDots[2])
                 chosenDots[1].column = x/interdistx;
                 mvwaddch(gridWindow,y,x,'O');
 
-                wattron(gridWindow, inGameData.player1turn?COLOR_PAIR(3):COLOR_PAIR(4));
+
                 drawLine(startY, startX, y, x);
-                wattroff(gridWindow, inGameData.player1turn?COLOR_PAIR(3):COLOR_PAIR(4));
+
                 wrefresh(gridWindow);
 
                 i++;
@@ -352,7 +371,8 @@ void getPlayerMove(struct dot chosenDots[2])
 
 void drawLine(int startY, int startX, int endY, int endX)
 {
-    int startRow = startY/interdisty, startColumn = startX/interdistx;
+    int startRow, startColumn;
+    wattron(gridWindow, inGameData.player1turn?COLOR_PAIR(3):COLOR_PAIR(4));
     if(startX > endX)
     {
         startX ^= endX;
@@ -365,23 +385,18 @@ void drawLine(int startY, int startX, int endY, int endX)
         endY ^= startY;
         startY ^= endY;
     }
+    startRow = startY/interdisty, startColumn = startX/interdistx;
     if(startX == endX) //vertical line
     {
         mvwvline(gridWindow,startY+1,startX,' ', interdisty-1);
-        if(!repaint)
-        {
-            inGameData.vLines[startColumn + startRow*mode] = inGameData.player1turn?3:4;
-        }
+        inGameData.vLines[startColumn + startRow*mode] = inGameData.player1turn?3:4;
     }
     else //horizontal line
     {
         mvwhline(gridWindow,startY,startX+1,' ', interdistx-1);
-        if(!repaint)
-        {
-            inGameData.hLines[startColumn + startRow*mode] = inGameData.player1turn?3:4;
-        }
+        inGameData.hLines[startRow + startColumn*mode] = inGameData.player1turn?3:4;
     }
-
+    wattroff(gridWindow, inGameData.player1turn?COLOR_PAIR(3):COLOR_PAIR(4));
 
 }
 
@@ -413,12 +428,17 @@ void getPlayerName(int whichPlayer)  //called when a player wins
 
 }
 
-void displayData(struct player * players, int n ) //n is number of players to display 1, 10
+void displayData(const char *name, int score ) //n is number of players to display 1, 10
 {
-    for(int i = 0; i<n; i++)
+    static int called = 0;
+    if(called == 0)
     {
-        /*do something*/
+        mvprintw(LINES/2,COLS/2,"TOP 10 PLAYERS");
     }
+    called++;
+    mvprintw((LINES/2)+called,COLS/2-22, name);
+    mvprintw((LINES/2)+called, COLS/2,"%d",score);
+    refresh();
 }
 
 int doMenu(int y, int x, WINDOW * currentMenu, int n, char * items[n])
@@ -475,19 +495,20 @@ int doMenu(int y, int x, WINDOW * currentMenu, int n, char * items[n])
 
 void updateDataWindow()
 {
-    wclrtobot(messageWindow);
-    box(messageWindow,0,0);
+    wclrtobot(dataWindow);
+    box(dataWindow,0,0);
     /*turn*/
     if(inGameData.linesLeft <= 0)
     {
-        mvwprintw(messageWindow,2,2, "Game Ended");
+        mvwprintw(dataWindow,2,2, "Game Ended       ");
+        wnoutrefresh(dataWindow);
     }
     else
     {
         wattron(dataWindow,inGameData.player1turn?COLOR_PAIR(1):COLOR_PAIR(2));
         mvwprintw(dataWindow, 2, 2,"Player %d's turn",inGameData.player1turn?1:2);
         wattroff(dataWindow,inGameData.player1turn?COLOR_PAIR(1):COLOR_PAIR(2));
-        wnoutrefresh(messageWindow);
+        wnoutrefresh(dataWindow);
     }
 
 
@@ -544,14 +565,10 @@ void repaintBox(int numberOfBoxes)
         y1 = 1 + diagonal[i][0].row * interdisty;
         y2 = 1 + diagonal[i][1].row * interdisty;
 
-        wattron(gridWindow, inGameData.player1turn?COLOR_PAIR(3):COLOR_PAIR(4));
-        repaint = true;
         drawLine(y1, x1, y1, x2);
         drawLine(y1, x1, y2, x1);
         drawLine(y2, x2, y1, x2);
         drawLine(y2, x2, y2, x1);
-        repaint = false;
-        wattroff(gridWindow, inGameData.player1turn?COLOR_PAIR(3):COLOR_PAIR(4));
         wrefresh(gridWindow);
     }
 

@@ -5,7 +5,7 @@ void initialiseUI(bool);
 void getPlayerMove(struct dot *);
 void drawLine(int, int, int,int);
 void getPlayerName(int);
-void displayData(struct player * players, int n );
+void displayData(const char  *, int );
 int doMenu(int y, int x, WINDOW * currentMenu,int n, char * items[n]);
 void updateDataWindow();
 int lineColor(int, int, int, int);

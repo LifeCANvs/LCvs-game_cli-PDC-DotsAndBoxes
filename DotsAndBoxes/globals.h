@@ -18,7 +18,8 @@ bool repaint;
 #include "structs.h"
 #include "grid.h"
 #include "pdIO.h"
-
+#include "interfacingWithFiles.h"
+#include "computerTurn.h"
 struct dot diagonal[2][2]; //diagonal of connected box
 
 

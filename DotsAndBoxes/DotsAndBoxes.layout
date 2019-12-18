@@ -2,105 +2,28 @@
 <CodeBlocks_layout_file>
 	<FileVersion major="1" minor="0" />
 	<ActiveTarget name="Debug" />
-	<File name="globals.h" open="1" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="pdIO.h" open="1" top="1" tabpos="3" split="0" active="1" splitpos="0" zoom_1="2" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="315" topLine="2" />
+			<Cursor1 position="174" topLine="1" />
 		</Cursor>
 	</File>
-	<File name="main.c" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="3" zoom_2="0">
+	<File name="structs.h" open="1" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="0" topLine="0" />
 		</Cursor>
-		<Folding>
-			<Collapse line="9" />
-		</Folding>
 	</File>
-	<File name="pdIO.h" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="2" zoom_2="0">
+	<File name="interfacingWithFiles.c" open="1" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="379" topLine="1" />
-		</Cursor>
-	</File>
-	<File name="computerTurn.c" open="0" top="0" tabpos="10" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="43" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="grid.h" open="1" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="128" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="interfacingWithFiles.c" open="1" top="0" tabpos="8" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="43" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="pdIO.c" open="1" top="1" tabpos="2" split="0" active="1" splitpos="0" zoom_1="2" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="2452" topLine="51" />
+			<Cursor1 position="4830" topLine="11" />
 		</Cursor>
 		<Folding>
-			<Collapse line="33" />
-			<Collapse line="35" />
-			<Collapse line="37" />
-			<Collapse line="43" />
-			<Collapse line="102" />
-			<Collapse line="120" />
-			<Collapse line="127" />
-			<Collapse line="129" />
-			<Collapse line="133" />
-			<Collapse line="138" />
-			<Collapse line="159" />
-			<Collapse line="197" />
-			<Collapse line="200" />
-			<Collapse line="212" />
-			<Collapse line="218" />
-			<Collapse line="220" />
-			<Collapse line="224" />
-			<Collapse line="229" />
-			<Collapse line="233" />
-			<Collapse line="238" />
-			<Collapse line="245" />
-			<Collapse line="250" />
-			<Collapse line="257" />
-			<Collapse line="262" />
-			<Collapse line="269" />
-			<Collapse line="274" />
-			<Collapse line="302" />
-			<Collapse line="308" />
-			<Collapse line="322" />
-			<Collapse line="336" />
-			<Collapse line="353" />
-			<Collapse line="356" />
-			<Collapse line="362" />
-			<Collapse line="368" />
-			<Collapse line="371" />
-			<Collapse line="376" />
-			<Collapse line="379" />
-			<Collapse line="390" />
-			<Collapse line="406" />
-			<Collapse line="416" />
-			<Collapse line="418" />
-			<Collapse line="424" />
-			<Collapse line="436" />
-			<Collapse line="442" />
-			<Collapse line="444" />
-			<Collapse line="446" />
-			<Collapse line="457" />
-			<Collapse line="476" />
-			<Collapse line="481" />
-			<Collapse line="485" />
-			<Collapse line="502" />
-			<Collapse line="521" />
-			<Collapse line="525" />
-			<Collapse line="529" />
-			<Collapse line="537" />
-			<Collapse line="540" />
+			<Collapse line="10" />
+			<Collapse line="56" />
 		</Folding>
 	</File>
-	<File name="grid.c" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="3" zoom_2="0">
+	<File name="grid.c" open="0" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="3" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="2540" topLine="1" />
+			<Cursor1 position="3640" topLine="80" />
 		</Cursor>
 		<Folding>
 			<Collapse line="6" />
@@ -111,24 +34,93 @@
 			<Collapse line="33" />
 			<Collapse line="38" />
 			<Collapse line="43" />
-			<Collapse line="52" />
-			<Collapse line="55" />
-			<Collapse line="57" />
-			<Collapse line="65" />
-			<Collapse line="74" />
-			<Collapse line="80" />
-			<Collapse line="86" />
-			<Collapse line="92" />
-			<Collapse line="101" />
-			<Collapse line="105" />
-			<Collapse line="107" />
-			<Collapse line="126" />
-			<Collapse line="128" />
 		</Folding>
 	</File>
-	<File name="structs.h" open="1" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="computerTurn.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="594" topLine="9" />
+			<Cursor1 position="103" topLine="0" />
 		</Cursor>
+	</File>
+	<File name="globals.h" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="566" topLine="3" />
+		</Cursor>
+	</File>
+	<File name="interfacingWithFiles.h" open="1" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="168" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="main.c" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="3" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1900" topLine="58" />
+		</Cursor>
+	</File>
+	<File name="computerTurn.c" open="0" top="0" tabpos="10" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="586" topLine="19" />
+		</Cursor>
+	</File>
+	<File name="grid.h" open="0" top="0" tabpos="8" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="128" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="pdIO.c" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="2" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="13862" topLine="20" />
+		</Cursor>
+		<Folding>
+			<Collapse line="6" />
+			<Collapse line="33" />
+			<Collapse line="35" />
+			<Collapse line="37" />
+			<Collapse line="43" />
+			<Collapse line="53" />
+			<Collapse line="56" />
+			<Collapse line="60" />
+			<Collapse line="73" />
+			<Collapse line="110" />
+			<Collapse line="128" />
+			<Collapse line="135" />
+			<Collapse line="137" />
+			<Collapse line="141" />
+			<Collapse line="149" />
+			<Collapse line="172" />
+			<Collapse line="179" />
+			<Collapse line="214" />
+			<Collapse line="217" />
+			<Collapse line="229" />
+			<Collapse line="235" />
+			<Collapse line="237" />
+			<Collapse line="241" />
+			<Collapse line="246" />
+			<Collapse line="252" />
+			<Collapse line="257" />
+			<Collapse line="264" />
+			<Collapse line="269" />
+			<Collapse line="276" />
+			<Collapse line="281" />
+			<Collapse line="288" />
+			<Collapse line="293" />
+			<Collapse line="321" />
+			<Collapse line="327" />
+			<Collapse line="341" />
+			<Collapse line="355" />
+			<Collapse line="372" />
+			<Collapse line="376" />
+			<Collapse line="382" />
+			<Collapse line="389" />
+			<Collapse line="394" />
+			<Collapse line="405" />
+			<Collapse line="421" />
+			<Collapse line="496" />
+			<Collapse line="501" />
+			<Collapse line="506" />
+			<Collapse line="523" />
+			<Collapse line="542" />
+			<Collapse line="558" />
+			<Collapse line="561" />
+		</Folding>
 	</File>
 </CodeBlocks_layout_file>

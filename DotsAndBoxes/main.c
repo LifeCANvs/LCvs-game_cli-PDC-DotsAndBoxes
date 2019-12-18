@@ -3,12 +3,13 @@
 //extern int mode;
 bool computer;
 
-void playGame();
+void playGame(bool);
 
 
 int main()
 {
-    int choice, x = 4, y = 4;
+    int choice, x = 10, y = 6;
+    bool ingame = false;
     char * mainMenuItems[4]= {"start game","load game","top 10 players","exit"};
     char * subMenu1[4] = {"beginner vs beginner","beginner vs computer","expert vs expert","expert vs computer"};
     char * subMenu2[6] = {"beginner game 1", "beginner game 2", "beginner game 3", "expert game 1", "expert game 2","expert game 3"};
@@ -18,9 +19,11 @@ int main()
     cbreak();
     noecho();
     refresh();
-    wprintw(stdscr,"\t\t*** \t ** \t***\t***\n\
-             \t*  *\t*  *\t * \t *\n\
-             \t*** \t ** \t * \t***\n");
+    initialiseRandom();
+    mvprintw(1,3,"____   __  ____  ____     __   __ _  ____    ____   __  _  _  ____  ____");
+    mvprintw(2,3,"(    \\ /  \\(_  _)/ ___)   / _\\ (  ( \\(    \\  (  _ \\ /  \\( \\/ )(  __)/ ___)");
+    mvprintw(3,3," ) D ((  O ) )(  \\___ \\  /    \\/    / ) D (   ) _ ((  O ))  (  ) _) \\___ \\");
+    mvprintw(4,3,"(____/ \\__/ (__) (____/  \\_/\\_/\\_)__)(____/  (____/ \\__/(_/\\_)(____)(____/");
     refresh();
 
     choice = doMenu(y,x, mainMenuWin,4, mainMenuItems);  //main menu
@@ -28,80 +31,93 @@ int main()
     switch(choice)
     {
 
-    case 0: /* beginner, vs human*/
+    case 0:
+        ingame =true;
         choice = doMenu(y+2,x+10,mainMenuWin,4,subMenu1);
         switch(choice)
         {
         case 0:
             mode = 3, computer = false;
-            playGame();
+            playGame(false);
             break;
         case 1:
             mode = 3, computer = true;
-            playGame();
+            playGame(false);
             break;
         case 2:
             mode = 5, computer = false;
-            playGame();
+            playGame(false);
             break;
         case 3:
             mode = 5, computer = true;
-            playGame();
+            playGame(false);
             break;
         }
         break;
     case 1:
+        ingame = true;
         choice = doMenu(y+3,x+10,mainMenuWin, 6,subMenu2);
-        switch(choice)
-        {
-        case 0:
-            break;
-        default:
-            break;
-
-        }
+        loadGame(choice);
+        playGame(true);
         break;
     case 2:
-        //read from file then print
+        clear();
+        getTop10();
         break;
     default:
         break;
     }
 
-    delwin(gridWindow);
+    getch();
+
+    delwin(mainMenuWin);
+    if(ingame){
+        delwin(gridWindow);
     delwin(dataWindow);
     delwin(messageWindow);
     delwin(helpWindow);
-    getch();
+    }
+
+
     endwin();
     return 0;
 }
 
-void playGame()
+void playGame(bool reload)
 {
     struct dot chosenDots[2];
     int boxesConnected;
     int currentPlayer;
     repaint = false;
     saved = false;
-    for(int i = 0; i<20; i++){
-        inGameData.vLines[i] = 0;
-        inGameData.hLines[i] = 0;
-    }
-
-    inGameData.player1turn = true;
-    inGameData.timeElapsed = (time_t)0;
-    inGameData.linesLeft = 2*(mode - 1)*(mode);
     time1 = time(NULL);
 
-    initialiseGrid();
-    initialiseUI(false);
-
-    for(int i = 0; i < 2; i++)
+    if(reload)
     {
-        inGameData.players[i].score = 0;
-        inGameData.players[i].moves = 0;
+        initialiseUI(true);
     }
+    else //initialise game
+    {
+        for(int i = 0; i<20; i++)
+        {
+            inGameData.vLines[i] = 0;
+            inGameData.hLines[i] = 0;
+        }
+
+        inGameData.player1turn = true;
+        inGameData.timeElapsed = (time_t)0;
+        inGameData.linesLeft = 2*(mode - 1)*(mode);
+
+        initialiseGrid();
+        initialiseUI(false);
+        for(int i = 0; i < 2; i++)
+        {
+            inGameData.players[i].score = 0;
+            inGameData.players[i].moves = 0;
+        }
+
+    }
+
 
 
     while(inGameData.linesLeft > 0) //UNDO is done within getPlayerMove
@@ -110,7 +126,7 @@ void playGame()
         updateDataWindow();
         if(computer && !inGameData.player1turn)
         {
-            //chosenDots = getComputerMove();
+            getComputerMove(chosenDots);
         }
         else
         {
@@ -135,18 +151,25 @@ void playGame()
             inGameData.player1turn = !inGameData.player1turn;
         }
     }
-    updateDataWindow(-1);
+    updateDataWindow();
     if(inGameData.players[0].score > inGameData.players[1].score)
     {
-        getPlayerName(0); //prints who is winner and prompt name
+        getPlayerName(1); //prints who is winner and prompt name
     }
     else if(inGameData.players[0].score == inGameData.players[1].score)
     {
         mvwprintw(messageWindow, 2,2, "It's a draw!");
         wrefresh(messageWindow);
     }
+    else if (!computer)
+    {
+        getPlayerName(2);
+    }
     else
-        getPlayerName(1);
+    {
+        mvwprintw(messageWindow, 2,2, "The Computer Wins");
+        wrefresh(messageWindow);
+    }
 
     mvwprintw(helpWindow, 5,1,"Press any key to exit");
     wrefresh(helpWindow);
