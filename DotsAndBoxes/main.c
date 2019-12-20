@@ -1,9 +1,8 @@
 #include "globals.h"
 
 //extern int mode;
-bool computer;
 
-void playGame(bool);
+void playGame();
 
 
 int main()
@@ -20,7 +19,7 @@ int main()
     noecho();
     refresh();
     initialiseRandom();
-    mvprintw(1,3,"____   __  ____  ____     __   __ _  ____    ____   __  _  _  ____  ____");
+    mvprintw(1,3," ____   __  ____  ____     __   __ _  ____    ____   __  _  _  ____  ____");
     mvprintw(2,3,"(    \\ /  \\(_  _)/ ___)   / _\\ (  ( \\(    \\  (  _ \\ /  \\( \\/ )(  __)/ ___)");
     mvprintw(3,3," ) D ((  O ) )(  \\___ \\  /    \\/    / ) D (   ) _ ((  O ))  (  ) _) \\___ \\");
     mvprintw(4,3,"(____/ \\__/ (__) (____/  \\_/\\_/\\_)__)(____/  (____/ \\__/(_/\\_)(____)(____/");
@@ -37,25 +36,25 @@ int main()
         switch(choice)
         {
         case 0:
-            mode = 3, computer = false;
-            playGame(false);
+            mode = 3, inGameData.computer = false, reload = false;
+            playGame();
             break;
         case 1:
-            mode = 3, computer = true;
-            playGame(false);
+            mode = 3, inGameData.computer = true, reload = false;
+            playGame();
             break;
         case 2:
-            mode = 5, computer = false;
-            playGame(false);
+            mode = 5, inGameData.computer = false, reload = false;
+            playGame();
             break;
         case 3:
-            mode = 5, computer = true;
-            playGame(false);
+            mode = 5, inGameData.computer = true, reload = false;
+            playGame();
             break;
         }
         break;
     case 1:
-        ingame = true;
+        ingame = true, reload = true;
         choice = doMenu(y+3,x+10,mainMenuWin, 6,subMenu2);
         loadGame(choice);
         playGame(true);
@@ -83,7 +82,7 @@ int main()
     return 0;
 }
 
-void playGame(bool reload)
+void playGame()
 {
     struct dot chosenDots[2];
     int boxesConnected;
@@ -124,7 +123,7 @@ void playGame(bool reload)
     {
         currentPlayer = inGameData.player1turn?0:1;
         updateDataWindow();
-        if(computer && !inGameData.player1turn)
+        if(inGameData.computer && !inGameData.player1turn)
         {
             getComputerMove(chosenDots);
         }
@@ -161,7 +160,7 @@ void playGame(bool reload)
         mvwprintw(messageWindow, 2,2, "It's a draw!");
         wrefresh(messageWindow);
     }
-    else if (!computer)
+    else if (!inGameData.computer)
     {
         getPlayerName(2);
     }

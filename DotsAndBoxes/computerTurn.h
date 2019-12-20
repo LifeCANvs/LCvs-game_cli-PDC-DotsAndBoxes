@@ -4,5 +4,6 @@
 
 void getComputerMove(struct dot *);
 void initialiseRandom();
+int getRandomNumber(int);
 
 #endif // CUMPUTERTURN_H_INCLUDED

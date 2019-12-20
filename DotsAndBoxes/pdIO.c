@@ -3,7 +3,7 @@
 
 
 
-void initialiseUI(bool reload)
+void initialiseUI()
 {
 
     int remainingLines = LINES - 21;
@@ -345,9 +345,9 @@ void getPlayerMove(struct dot chosenDots[2])
                 chosenDots[1].column = x/interdistx;
                 mvwaddch(gridWindow,y,x,'O');
 
-
+                wattron(gridWindow, inGameData.player1turn?COLOR_PAIR(3):COLOR_PAIR(4));
                 drawLine(startY, startX, y, x);
-
+                wattroff(gridWindow, inGameData.player1turn?COLOR_PAIR(3):COLOR_PAIR(4));
                 wrefresh(gridWindow);
 
                 i++;
@@ -372,7 +372,6 @@ void getPlayerMove(struct dot chosenDots[2])
 void drawLine(int startY, int startX, int endY, int endX)
 {
     int startRow, startColumn;
-    wattron(gridWindow, inGameData.player1turn?COLOR_PAIR(3):COLOR_PAIR(4));
     if(startX > endX)
     {
         startX ^= endX;
@@ -396,7 +395,6 @@ void drawLine(int startY, int startX, int endY, int endX)
         mvwhline(gridWindow,startY,startX+1,' ', interdistx-1);
         inGameData.hLines[startRow + startColumn*mode] = inGameData.player1turn?3:4;
     }
-    wattroff(gridWindow, inGameData.player1turn?COLOR_PAIR(3):COLOR_PAIR(4));
 
 }
 
@@ -405,6 +403,7 @@ void drawLine(int startY, int startX, int endY, int endX)
 void getPlayerName(int whichPlayer)  //called when a player wins
 {
     char name[22];
+    int rank;
 
     wclrtobot(messageWindow);
     box(messageWindow,0,0);
@@ -423,8 +422,9 @@ void getPlayerName(int whichPlayer)  //called when a player wins
         name[i] = tolower(name[i]);
     } //what about \n?
     strcpy(inGameData.players[whichPlayer].name, name);
-
-    //call function to save player name
+    rank = savePlayer(inGameData.players[whichPlayer]);
+    mvwprintw(messageWindow, 6,1,"Your rank is %d", rank+1);
+    wrefresh(messageWindow);
 
 }
 
@@ -564,11 +564,12 @@ void repaintBox(int numberOfBoxes)
         x2 = 1 + diagonal[i][1].column * interdistx;
         y1 = 1 + diagonal[i][0].row * interdisty;
         y2 = 1 + diagonal[i][1].row * interdisty;
-
+        wattron(gridWindow, inGameData.player1turn?COLOR_PAIR(3):COLOR_PAIR(4));
         drawLine(y1, x1, y1, x2);
         drawLine(y1, x1, y2, x1);
         drawLine(y2, x2, y1, x2);
         drawLine(y2, x2, y2, x1);
+        wattroff(gridWindow, inGameData.player1turn?COLOR_PAIR(3):COLOR_PAIR(4));
         wrefresh(gridWindow);
     }
 

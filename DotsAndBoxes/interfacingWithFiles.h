@@ -2,9 +2,9 @@
 #define INTERFACINGWITHFILES_H_INCLUDED
 
 void saveGame(int);
-void savePlayer();
-void loadGame();
-struct palyer * getTop10();
+int savePlayer(struct player);
+void loadGame(int);
+void getTop10();
 
 
 #endif // INTERFACINGWITHFILES_H_INCLUDED

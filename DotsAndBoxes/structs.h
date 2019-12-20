@@ -24,6 +24,7 @@ struct{
     bool player1turn;
     int vLines[20];
     int hLines[20];
+    bool computer;
 
 }inGameData;
 

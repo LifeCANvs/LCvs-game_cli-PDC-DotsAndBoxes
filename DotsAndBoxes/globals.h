@@ -13,6 +13,7 @@ int mode; //linesLeft = (mode-1)*(mode-1)
 time_t time1;
 bool saved;
 bool repaint;
+bool reload;
 
 
 #include "structs.h"

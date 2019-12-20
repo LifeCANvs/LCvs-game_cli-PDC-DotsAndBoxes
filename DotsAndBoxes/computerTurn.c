@@ -63,7 +63,9 @@ void getComputerMove(struct dot chosenDots[2])
     }
     while((startX ==endX && startY == endY) || lineColor(startY, startX, endY, endX));  //same dot or already joined
     chosenDots[1].row = row, chosenDots[1].column = column;
+    wattron(gridWindow, COLOR_PAIR(4));
     drawLine(startY,startX,endY, endX);
+    wattroff(gridWindow, COLOR_PAIR(4));
     wrefresh(gridWindow);
 }
 

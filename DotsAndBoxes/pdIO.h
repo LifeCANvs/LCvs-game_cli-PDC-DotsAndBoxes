@@ -1,7 +1,7 @@
 #ifndef PDIO_H_INCLUDED
 #define PDIO_H_INCLUDED
 
-void initialiseUI(bool);
+void initialiseUI();
 void getPlayerMove(struct dot *);
 void drawLine(int, int, int,int);
 void getPlayerName(int);
