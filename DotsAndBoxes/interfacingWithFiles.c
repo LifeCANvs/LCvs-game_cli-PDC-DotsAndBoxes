@@ -37,6 +37,7 @@ int savePlayer(struct player player1)
     {
         a[i]=atoi(arr[i][1]);
     }
+       fclose(F1);
     /////////////////////////////////////////////////////////////// read data from fill: done
     for(i=0; i<count; i++)
     {
@@ -116,9 +117,12 @@ int savePlayer(struct player player1)
     /////////////////////////////////////////////////////////// case of (test==0 && player1.score<=a[i]) : done
     else if(test!=0)
     {
+        FILE *F1;
+        F1=fopen(".\\Highscores.txt","a+"); //paths //read and append
         fprintf(F1,"%s",player1.name);
         fprintf(F1,",%d",player1.score);
         fprintf(F1,"\n");
+        fclose(F1);
         /////////
         count=0;
         i=0;
